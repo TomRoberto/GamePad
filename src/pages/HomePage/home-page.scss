@@ -15,4 +15,18 @@
       bottom: 0;
     }
   }
+  .pages {
+    display: flex;
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: solid black 2px;
+      height: 50px;
+      width: 50px;
+    }
+    .page {
+      color: green;
+    }
+  }
 }
