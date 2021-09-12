@@ -17,7 +17,16 @@ const Header = ({ setConnected, userToken, username }) => {
             <button className="collection">My Collection</button>
           </Link>
           {userToken ? (
-            <p className="name">{username}</p>
+            <>
+              <p
+                onClick={() => {
+                  setConnected(null, null);
+                }}
+                className="login"
+              >
+                Log Out
+              </p>
+            </>
           ) : (
             <Link to="/login">
               <button className="login">Login</button>

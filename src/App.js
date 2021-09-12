@@ -2,6 +2,7 @@ import "./App.scss";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { ToastContainer } from "react-toastify";
 
 // Import pages
 
@@ -14,6 +15,7 @@ import CollectionPage from "./pages/CollectionPage";
 // Import components
 
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -70,7 +72,9 @@ function App() {
             <HomePage />
           </Route>
         </Switch>
+        <Footer />
       </Router>
+      <ToastContainer />
     </div>
   );
 }

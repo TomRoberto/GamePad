@@ -1,12 +1,16 @@
 import "./collection-page.scss";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import notify from "../../components/ReactToastify";
+import Loader from "../../components/Loader";
+
 const CollectionPage = ({ token }) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(0);
+  // const [redirect, setRedirect] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,46 +41,51 @@ const CollectionPage = ({ token }) => {
         },
       }
     );
+    notify("Favorite deleted", "green-toastify");
     setRefresh(refresh + 1);
   };
 
   const history = useHistory();
 
-  return isLoading ? (
-    <p>Loading ...</p>
-  ) : (
-    <div className="collection-page">
-      <div className="container">
-        <header>
-          <h1>My Collection</h1>
-        </header>
-        <>
-          <div className="games">
-            {data.favorite.map((elem, index) => {
-              return (
-                <div className="game" key={index}>
-                  <img src={elem.gameData.background_image} alt="" />
-                  <p
-                    onClick={() => {
-                      history.push(`/game/${elem.gameData.slug}`);
-                    }}
-                  >
-                    {elem.gameData.name}
-                  </p>
-                  <FontAwesomeIcon
-                    className="star"
-                    icon="star"
-                    onClick={() => {
-                      handleUnfav(elem.gameData);
-                    }}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </>
+  return token ? (
+    isLoading ? (
+      <Loader />
+    ) : (
+      <div className="collection-page">
+        <div className="container">
+          <header>
+            <h1>My Collection</h1>
+          </header>
+          <>
+            <div className="games">
+              {data.favorite.map((elem, index) => {
+                return (
+                  <div className="game" key={index}>
+                    <img src={elem.gameData.background_image} alt="" />
+                    <p
+                      onClick={() => {
+                        history.push(`/game/${elem.gameData.slug}`);
+                      }}
+                    >
+                      {elem.gameData.name}
+                    </p>
+                    <FontAwesomeIcon
+                      className="star"
+                      icon="star"
+                      onClick={() => {
+                        handleUnfav(elem.gameData);
+                      }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        </div>
       </div>
-    </div>
+    )
+  ) : (
+    <Redirect to="/" />
   );
 };
 

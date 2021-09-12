@@ -5,6 +5,8 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../../assets/images/logo.png";
 
+import Loader from "../../components/Loader";
+
 const HomePage = () => {
   const [pageStep, setPageStep] = useState(0);
 
@@ -83,11 +85,15 @@ const HomePage = () => {
   };
 
   return isLoading ? (
-    <p>Loading ...</p>
+    <Loader />
   ) : (
     <div className="home-page">
       <div className="home-page-container">
-        <div>
+        <div
+          onClick={() => {
+            history.push("/");
+          }}
+        >
           <img src={logo} alt="" />
           <p>GamePad</p>
         </div>

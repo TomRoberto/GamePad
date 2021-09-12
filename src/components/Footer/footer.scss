@@ -1,0 +1,17 @@
+.footer {
+  color: white;
+  background-color: #181819;
+  .container {
+    background-color: #202023;
+    padding: 0 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    p {
+      color: grey;
+    }
+  }
+}

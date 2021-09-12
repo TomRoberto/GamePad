@@ -2,6 +2,10 @@ import "./game-page.scss";
 import { useParams, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+
+import notify from "../../components/ReactToastify";
+import Loader from "../../components/Loader";
+
 const GamePage = ({ token }) => {
   const [data, setData] = useState();
   const [otherGamesData, setOtherGamesData] = useState();
@@ -66,6 +70,10 @@ const GamePage = ({ token }) => {
             },
           }
         );
+        if (response) {
+          console.log("fav");
+          notify("Favorite created", "green-toastify");
+        }
       } else {
         const response = await axios.post(
           "http://localhost:4000/favorite/delete",
@@ -76,6 +84,9 @@ const GamePage = ({ token }) => {
             },
           }
         );
+        if (response) {
+          notify("Favorite deleted", "green-toastify");
+        }
       }
       setRefresh(refresh + 1);
     } else {
@@ -119,7 +130,7 @@ const GamePage = ({ token }) => {
   }
 
   return isLoading ? (
-    <p>Loading ...</p>
+    <Loader />
   ) : (
     <div className="game-page">
       <div className="game-container">

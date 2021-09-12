@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import notify from "../../components/ReactToastify";
 
 const SignupPage = ({ setConnected }) => {
   const [email, setEmail] = useState("");
@@ -15,19 +16,25 @@ const SignupPage = ({ setConnected }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:4000/signup", {
-        email,
-        password,
-        username,
-      });
-      if (response.data.token) {
-        setConnected(response.data.token, response.data.username);
-        alert("You are now connected");
-        history.push("/");
+    if (password === confirmPassword) {
+      try {
+        const response = await axios.post("http://localhost:4000/signup", {
+          email,
+          password,
+          username,
+        });
+        if (response.data.token) {
+          setConnected(response.data.token, response.data.username);
+          notify("You are now connected", "green-toastify");
+          // alert("You are now connected");
+          history.push("/");
+        }
+      } catch (error) {
+        console.log(error.message);
+        notify(error.response.data.error.message, "red-toastify");
       }
-    } catch (error) {
-      console.log(error.message);
+    } else {
+      notify("Passwords must be the same", "red-toastify");
     }
   };
 
