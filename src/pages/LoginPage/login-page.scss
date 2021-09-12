@@ -1,0 +1,93 @@
+.login-page {
+  background-color: #181819;
+  height: calc(100vh - 70px);
+  color: white;
+  .container {
+    height: 100%;
+    background-color: #202023;
+    padding: 0 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    // padding-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .sections {
+      display: flex;
+      height: 50vh;
+      //   background-color: #2d2e2e;
+      border-radius: 5px;
+      box-sizing: border-box;
+      //   align-items: center;
+
+      section {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        padding: 0 40px;
+        padding-top: 100px;
+        box-sizing: border-box;
+        // justify-content: center;
+        // justify-content: space-evenly;
+        // height: 400px;
+      }
+      section:first-child {
+        border-right: #ff4655 solid 3px;
+        background: linear-gradient(#333436, #181818);
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        p {
+          margin-bottom: 20px;
+        }
+        .icon-text {
+          display: flex;
+          align-items: center;
+          :first-child {
+            margin-bottom: 20px;
+            font-size: 30px;
+            margin-right: 20px;
+          }
+        }
+      }
+      section:last-child {
+        background: linear-gradient(#181818, #333436);
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        form {
+          display: flex;
+          flex-direction: column;
+          input {
+            // height: 30px;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+          }
+        }
+        input:last-child {
+          background-color: #ff4655;
+          color: white;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        .signup {
+          color: white;
+          text-decoration: none;
+          font-size: 13px;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    h1 {
+      color: white;
+      font-size: 25px;
+      //   border-bottom: solid 3px #ff4655;
+      margin-bottom: 30px;
+    }
+  }
+}

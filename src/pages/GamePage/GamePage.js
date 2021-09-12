@@ -47,7 +47,7 @@ const GamePage = ({ token }) => {
   const checkIfFavorite = () => {
     if (favoriteData) {
       for (let i = 0; i < favoriteData.favorite.length; i++) {
-        if (favoriteData.favorite[i] === slug) {
+        if (favoriteData.favorite[i].gameData.slug === slug) {
           return true;
         }
       }
@@ -59,15 +59,25 @@ const GamePage = ({ token }) => {
       if (!checkIfFavorite()) {
         const response = await axios.post(
           "http://localhost:4000/favorite/create",
-          { slug: slug },
+          { game: data },
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        setRefresh(refresh + 1);
+      } else {
+        const response = await axios.post(
+          "http://localhost:4000/favorite/delete",
+          { game: data },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       }
+      setRefresh(refresh + 1);
     } else {
       history.push("/login");
     }
@@ -113,7 +123,9 @@ const GamePage = ({ token }) => {
   ) : (
     <div className="game-page">
       <div className="game-container">
-        <h1>{data.name}</h1>
+        <div className="title">
+          <h1>{data.name}</h1>
+        </div>
         <article>
           <div className="img-container">
             <img src={data.background_image} alt="" />

@@ -1,21 +1,29 @@
 import "./header.scss";
 import { Link } from "react-router-dom";
+import logo from "../../assets/images/logo.png";
 
 const Header = ({ setConnected, userToken, username }) => {
   return (
-    <div>
-      <p>GAMEPAD</p>
-      <div>
-        <button>My Collection</button>
-        {userToken ? (
-          <Link>
-            <p>{username}</p>
+    <div className="header">
+      <div className="container">
+        <div>
+          <Link to="/" className="link-home">
+            <img src={logo} alt="" />
+            <p>GamePad</p>
           </Link>
-        ) : (
-          <Link to="/login">
-            <button>Login</button>
+        </div>
+        <div>
+          <Link to="/collection">
+            <button className="collection">My Collection</button>
           </Link>
-        )}
+          {userToken ? (
+            <p className="name">{username}</p>
+          ) : (
+            <Link to="/login">
+              <button className="login">Login</button>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

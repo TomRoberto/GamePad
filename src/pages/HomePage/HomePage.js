@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import logo from "../../assets/images/logo.png";
 
 const HomePage = () => {
   const [pageStep, setPageStep] = useState(0);
@@ -87,6 +88,10 @@ const HomePage = () => {
     <div className="home-page">
       <div className="home-page-container">
         <div>
+          <img src={logo} alt="" />
+          <p>GamePad</p>
+        </div>
+        <div>
           <div className="input-container">
             <input
               placeholder="Search for a game..."
@@ -169,6 +174,9 @@ const HomePage = () => {
                       }}
                     >
                       {elem.name}
+                      {elem.id === platforms.id && (
+                        <FontAwesomeIcon icon="check" />
+                      )}
                     </li>
                   );
                 })}
@@ -210,7 +218,7 @@ const HomePage = () => {
                       className="order"
                       key={index}
                       onClick={() => {
-                        if (ordering === elem) {
+                        if (ordering === elem.toLowerCase()) {
                           setOrdering("");
                         } else {
                           setOrdering(elem.toLowerCase());
@@ -219,7 +227,9 @@ const HomePage = () => {
                       }}
                     >
                       {elem}
-                      {elem === ordering && <FontAwesomeIcon icon="check" />}
+                      {elem.toLowerCase() === ordering ? (
+                        <FontAwesomeIcon icon="check" />
+                      ) : null}
                     </p>
                   );
                 })}

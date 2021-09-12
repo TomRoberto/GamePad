@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage";
 import GamePage from "./pages/GamePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import CollectionPage from "./pages/CollectionPage";
 
 // Import components
 
@@ -19,8 +20,12 @@ import {
   faSearch,
   faCheck,
   faChevronDown,
+  faStar,
+  faUser,
+  faCommentAlt,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faSearch, faCheck, faChevronDown);
+// import { faUser } from "@fortawesome/free-regular-svg-icons";
+library.add(faSearch, faCheck, faChevronDown, faStar, faUser, faCommentAlt);
 
 function App() {
   const [userToken, setUserToken] = useState(Cookies.get("token") || null);
@@ -49,6 +54,9 @@ function App() {
           username={username}
         />
         <Switch>
+          <Route path="/collection">
+            <CollectionPage token={userToken} />
+          </Route>
           <Route path="/signup">
             <SignupPage setConnected={setConnected} />
           </Route>
