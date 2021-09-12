@@ -1,6 +1,8 @@
 import "./home-page.scss";
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const HomePage = () => {
   const [pageStep, setPageStep] = useState(0);
@@ -20,6 +22,8 @@ const HomePage = () => {
 
   const [platformData, setplatformData] = useState();
   const [genresData, setgenresData] = useState();
+
+  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,13 +54,13 @@ const HomePage = () => {
   }, [page, search, pageSize, platforms, genres, ordering]);
 
   const orderingTab = [
-    "name",
-    "released",
-    "added",
-    "created",
-    "updated",
-    "rating",
-    "metacritic",
+    "Name",
+    "Released",
+    "Added",
+    "Created",
+    "Updated",
+    "Rating",
+    "Metacritic",
   ];
 
   const handleGenreChange = (genre) => {
@@ -81,119 +85,198 @@ const HomePage = () => {
     <p>Loading ...</p>
   ) : (
     <div className="home-page">
-      <input
-        type="text"
-        onChange={(event) => {
-          setSearch(event.target.value);
-        }}
-      />
-      <p>search {data.count} games</p>
-      <div>
-        {showType ? (
-          <ul>
-            {genresData.results.map((elem, index) => {
-              return (
+      <div className="home-page-container">
+        <div>
+          <div className="input-container">
+            <input
+              placeholder="Search for a game..."
+              type="text"
+              onChange={(event) => {
+                setSearch(event.target.value);
+              }}
+            />
+            <FontAwesomeIcon icon="search" />
+          </div>
+
+          <p>Search {data.count} games</p>
+        </div>
+        <div>
+          <div>
+            {showType ? (
+              <ul>
                 <li
-                  key={index}
                   onClick={() => {
-                    handleGenreChange(elem);
+                    setGenres("");
+                    setShowType(false);
                   }}
                 >
-                  {elem.name}
+                  All
                 </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p
-            onClick={() => {
-              setShowType(true);
-            }}
-          >
-            {genres ? genres.name : "Type"}
-          </p>
-        )}
-      </div>
-      <div>
-        {showPlatforms ? (
-          <ul>
-            {platformData.results.map((elem, index) => {
-              return (
-                <li
-                  key={index}
-                  onClick={() => {
-                    handlePlatformChange(elem);
-                  }}
-                >
-                  {elem.name}
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p
-            onClick={() => {
-              setShowPlatforms(true);
-            }}
-          >
-            {platforms ? platforms.name : "Platform"}
-          </p>
-        )}
-      </div>
-      <div>
-        {showOrdering ? (
-          orderingTab.map((elem, index) => {
-            return (
+                {genresData.results.map((elem, index) => {
+                  return (
+                    <>
+                      <li
+                        key={index}
+                        onClick={() => {
+                          handleGenreChange(elem);
+                        }}
+                      >
+                        {elem.name}
+                        {elem.id === genres.id && (
+                          <FontAwesomeIcon icon="check" />
+                        )}
+                      </li>
+                    </>
+                  );
+                })}
+              </ul>
+            ) : (
               <p
-                key={index}
                 onClick={() => {
-                  if (ordering === elem) {
-                    setOrdering("");
-                  } else {
-                    setOrdering(elem);
-                  }
-                  setShowOrdering(false);
+                  setShowType(true);
                 }}
               >
-                {elem}
+                {genres ? (
+                  <div>
+                    <p>Type :</p> <span> {genres.name}</span>
+                  </div>
+                ) : (
+                  <div>
+                    <p>Type :</p> <span>All</span>
+                  </div>
+                )}
+                <FontAwesomeIcon icon="chevron-down" />
               </p>
+            )}
+          </div>
+          <div>
+            {showPlatforms ? (
+              <ul>
+                <li
+                  onClick={() => {
+                    setPlatforms("");
+                    setShowPlatforms(false);
+                  }}
+                >
+                  All
+                </li>
+                {platformData.results.map((elem, index) => {
+                  return (
+                    <li
+                      key={index}
+                      onClick={() => {
+                        handlePlatformChange(elem);
+                      }}
+                    >
+                      {elem.name}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p
+                onClick={() => {
+                  setShowPlatforms(true);
+                }}
+              >
+                {platforms ? (
+                  <div>
+                    <p>Platform :</p> <span>{platforms.name}</span>
+                  </div>
+                ) : (
+                  <div>
+                    <p>Platform :</p> <span>All</span>
+                  </div>
+                )}
+                <FontAwesomeIcon icon="chevron-down" />
+              </p>
+            )}
+          </div>
+          <div>
+            {showOrdering ? (
+              <>
+                <p
+                  className="order"
+                  onClick={() => {
+                    setOrdering("");
+                    setShowOrdering(false);
+                  }}
+                >
+                  Relevance
+                </p>
+                {orderingTab.map((elem, index) => {
+                  return (
+                    <p
+                      className="order"
+                      key={index}
+                      onClick={() => {
+                        if (ordering === elem) {
+                          setOrdering("");
+                        } else {
+                          setOrdering(elem.toLowerCase());
+                        }
+                        setShowOrdering(false);
+                      }}
+                    >
+                      {elem}
+                      {elem === ordering && <FontAwesomeIcon icon="check" />}
+                    </p>
+                  );
+                })}
+              </>
+            ) : (
+              <p
+                onClick={() => {
+                  setShowOrdering(true);
+                }}
+              >
+                {ordering ? (
+                  <div>
+                    <p>Sort by :</p> <span>{ordering}</span>
+                  </div>
+                ) : (
+                  <div>
+                    <p>Sort by :</p> <span> Relevance</span>{" "}
+                  </div>
+                )}
+                <FontAwesomeIcon icon="chevron-down" />
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div>
+          {data.results.map((elem, index) => {
+            console.log(elem.background_image);
+            return (
+              <div
+                className="game"
+                key={index}
+                onClick={() => {
+                  history.push(`/game/${elem.slug}`);
+                }}
+              >
+                <img src={elem.background_image} alt="Game" />
+                <p>{elem.name}</p>
+              </div>
             );
-          })
-        ) : (
-          <p
-            onClick={() => {
-              setShowOrdering(true);
-            }}
-          >
-            Sort by {ordering ? ordering : "relevance"}
-          </p>
-        )}
-      </div>
-      <div>
-        {data.results.map((elem, index) => {
-          console.log(elem.background_image);
-          return (
-            <div className="game" key={index}>
-              <img src={elem.background_image} alt="Game" />
-              <p>{elem.name}</p>
-            </div>
-          );
-        })}
-      </div>
-      <div className="pages">
-        {data.results.map((elem, index) => {
-          return index + 1 >= page - 2 && index + 1 <= page + 2 ? (
-            <button
-              className={index + 1 === page && `page`}
-              key={index}
-              onClick={() => {
-                setPage(index + 1);
-              }}
-            >
-              <p>{index + 1}</p>
-            </button>
-          ) : null;
-        })}
+          })}
+        </div>
+        <div className="pages">
+          {data.results.map((elem, index) => {
+            return index + 1 >= page - 2 && index + 1 <= page + 2 ? (
+              <button
+                className={index + 1 === page && `page`}
+                key={index}
+                onClick={() => {
+                  setPage(index + 1);
+                }}
+              >
+                <p>{index + 1}</p>
+              </button>
+            ) : null;
+          })}
+        </div>
       </div>
     </div>
   );
