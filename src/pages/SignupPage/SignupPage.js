@@ -59,7 +59,7 @@ const SignupPage = ({ setConnected }) => {
             </div>
           </section>
           <section>
-            <h1>Login</h1>
+            <h1>SignUp</h1>
             <form onSubmit={handleSubmit}>
               <input
                 type="email"

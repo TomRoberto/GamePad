@@ -13,7 +13,7 @@ const Header = ({ setConnected, userToken, username }) => {
           </Link>
         </div>
         <div>
-          <Link to="/collection">
+          <Link to={userToken ? "/collection" : "/login"}>
             <button className="collection">My Collection</button>
           </Link>
           {userToken ? (

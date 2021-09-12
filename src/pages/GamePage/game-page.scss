@@ -47,6 +47,12 @@
           font-size: 15px;
           border-radius: 10px;
           margin-right: 20px;
+          &:hover {
+            cursor: pointer;
+            border: solid black 1px;
+            color: black;
+            background-color: white;
+          }
         }
         .fav {
           color: green;

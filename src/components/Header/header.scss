@@ -37,8 +37,10 @@
         background-color: transparent;
         border: none;
         font-size: 20px;
+        // box-sizing: content-box;
         &:hover {
           cursor: pointer;
+          border-bottom: solid white 2px;
         }
       }
       .login {
@@ -51,6 +53,7 @@
         padding: 5px 10px;
         &:hover {
           cursor: pointer;
+          border-bottom: solid white 2px;
         }
       }
       .name {
@@ -61,6 +64,7 @@
         font-size: 20px;
         &:hover {
           cursor: pointer;
+          border-bottom: solid white 2px;
         }
       }
     }
