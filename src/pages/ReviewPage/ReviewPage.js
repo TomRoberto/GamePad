@@ -12,7 +12,10 @@ const ReviewPage = ({ token }) => {
 
   const history = useHistory();
   const location = useLocation();
-  const gameData = location.state.gameData;
+  let gameData = 0;
+  if (location.state) {
+    gameData = location.state.gameData;
+  }
 
   const handleSubmit = async (event) => {
     try {
