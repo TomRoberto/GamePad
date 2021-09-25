@@ -30,12 +30,12 @@ const GamePage = ({ token, userId }) => {
           `https://api.rawg.io/api/games/${slug}/game-series?key=fc2881ec57b14a3682ccfd3064e510d4`
         );
         const responseReviews = await axios.post(
-          "http://localhost:4000/reviews/get",
+          "https://gamepad-tom-roberto.herokuapp.com/reviews/get",
           { slug }
         );
         if (token) {
           const responseFavorites = await axios.get(
-            "http://localhost:4000/favorite/get",
+            "https://gamepad-tom-roberto.herokuapp.com/favorite/get",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -70,7 +70,7 @@ const GamePage = ({ token, userId }) => {
     if (token) {
       if (!checkIfFavorite()) {
         const response = await axios.post(
-          "http://localhost:4000/favorite/create",
+          "https://gamepad-tom-roberto.herokuapp.com/favorite/create",
           { game: data },
           {
             headers: {
@@ -84,7 +84,7 @@ const GamePage = ({ token, userId }) => {
         }
       } else {
         const response = await axios.post(
-          "http://localhost:4000/favorite/delete",
+          "https://gamepad-tom-roberto.herokuapp.com/favorite/delete",
           { game: data },
           {
             headers: {

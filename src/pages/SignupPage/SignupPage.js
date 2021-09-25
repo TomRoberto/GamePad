@@ -18,11 +18,14 @@ const SignupPage = ({ setConnected }) => {
     event.preventDefault();
     if (password === confirmPassword) {
       try {
-        const response = await axios.post("http://localhost:4000/signup", {
-          email,
-          password,
-          username,
-        });
+        const response = await axios.post(
+          "https://gamepad-tom-roberto.herokuapp.com/signup",
+          {
+            email,
+            password,
+            username,
+          }
+        );
         if (response.data.token) {
           setConnected(response.data.token, response.data.id);
           notify("You are now connected", "green-toastify");

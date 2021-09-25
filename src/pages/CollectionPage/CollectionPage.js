@@ -15,11 +15,14 @@ const CollectionPage = ({ token }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/favorite/get", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          "https://gamepad-tom-roberto.herokuapp.com/favorite/get",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -31,7 +34,7 @@ const CollectionPage = ({ token }) => {
 
   const handleUnfav = async (game) => {
     const response = await axios.post(
-      "http://localhost:4000/favorite/delete",
+      "https://gamepad-tom-roberto.herokuapp.com/favorite/delete",
       {
         game: game,
       },

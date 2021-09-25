@@ -15,10 +15,13 @@ const LoginPage = ({ setConnected }) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:4000/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://gamepad-tom-roberto.herokuapp.com/login",
+        {
+          email,
+          password,
+        }
+      );
       if (response.data.token) {
         setConnected(response.data.token, response.data.id);
         notify("You are now connected", "green-toastify");

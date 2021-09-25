@@ -17,7 +17,7 @@ const ReviewPage = ({ token }) => {
     try {
       event.preventDefault();
       const response = await axios.post(
-        "http://localhost:4000/review/create",
+        "https://gamepad-tom-roberto.herokuapp.com/review/create",
         {
           text,
           title,
