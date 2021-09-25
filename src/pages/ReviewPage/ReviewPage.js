@@ -1,9 +1,10 @@
 import "./review-page.scss";
 import axios from "axios";
 import { useState } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, Redirect } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import notify from "../../components/ReactToastify";
 
 const ReviewPage = ({ token }) => {
   const [title, setTitle] = useState();
@@ -29,11 +30,15 @@ const ReviewPage = ({ token }) => {
           },
         }
       );
+      if (response) {
+        notify("Review saved", "green-toastify");
+        history.goBack();
+      }
     } catch (error) {
       console.log(error.response);
     }
   };
-  return (
+  return token ? (
     <div className="review-page">
       <div className="container">
         <form onSubmit={handleSubmit}>
@@ -71,6 +76,8 @@ const ReviewPage = ({ token }) => {
         </form>
       </div>
     </div>
+  ) : (
+    <Redirect to="/" />
   );
 };
 
