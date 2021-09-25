@@ -1,0 +1,59 @@
+.review-page {
+  background-color: #181819;
+  height: calc(100vh - 70px);
+  color: white;
+  .container {
+    height: 100%;
+    background-color: #202023;
+    padding: 0 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    form {
+      width: 50%;
+      height: 50%;
+      background-color: #424448;
+      border-radius: 10px;
+      padding: 20px;
+      box-sizing: border-box;
+      .submit {
+        border: none;
+        background-color: #ff4655;
+        color: white;
+        height: 50px;
+        width: 150px;
+        border-radius: 10px;
+        font-size: 17px;
+      }
+      .up-part {
+        display: flex;
+        justify-content: space-between;
+      }
+      h1 {
+        margin-bottom: 20px;
+        font-weight: bold;
+        font-size: 20px;
+      }
+      h2 {
+        margin-bottom: 5px;
+      }
+      .text-input {
+        height: 30px;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+        padding: 0 10px;
+      }
+      textarea {
+        height: 100px;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+        padding: 10px;
+        resize: none;
+      }
+    }
+  }
+}

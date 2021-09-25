@@ -7,6 +7,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding-top: 30px;
+    padding-bottom: 1px;
     .title {
       display: flex;
       justify-content: flex-start;
@@ -141,8 +142,9 @@
         border-radius: 10px;
       }
     }
-    .othergames {
-      div:first-child {
+    .othergames,
+    .reviews {
+      > div:first-child {
         display: flex;
         justify-content: center;
       }
@@ -150,6 +152,45 @@
         font-size: 20px;
         margin-bottom: 20px;
         border-bottom: solid #ff4655 3px;
+      }
+    }
+    .reviews {
+      // h2 {
+      //   font-size: 20px;
+      //   margin-bottom: 20px;
+      //   border-bottom: solid #ff4655 3px;
+      // }
+      > div:nth-child(2) {
+        width: 60%;
+        margin: 0 auto;
+        > p {
+          font-size: 20px;
+          margin-bottom: 30px;
+        }
+        .review {
+          position: relative;
+          // display: flex;
+          // flex-direction: column;
+          box-sizing: border-box;
+          background-color: #2a2b2e;
+          min-height: 150px;
+          padding: 10px 20px;
+          border-radius: 10px;
+          margin-bottom: 30px;
+          :first-child {
+            border-bottom: solid white 1px;
+            display: inline-block;
+            font-size: 20px;
+            margin-bottom: 10px;
+          }
+          :last-child {
+            position: absolute;
+            bottom: 10px;
+            // justify-self: flex-end;
+            // border: solid 1px white;
+            // height: 100%;
+          }
+        }
       }
     }
   }

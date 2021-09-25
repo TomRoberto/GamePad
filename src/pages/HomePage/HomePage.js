@@ -114,7 +114,11 @@ const HomePage = () => {
         <div>
           <div>
             {showType ? (
-              <ul>
+              <ul
+              // onBlur={() => {
+              //   setShowType(false);
+              // }}
+              >
                 <li
                   onClick={() => {
                     setGenres("");

@@ -24,7 +24,7 @@ const SignupPage = ({ setConnected }) => {
           username,
         });
         if (response.data.token) {
-          setConnected(response.data.token, response.data.username);
+          setConnected(response.data.token, response.data.id);
           notify("You are now connected", "green-toastify");
           // alert("You are now connected");
           history.push("/");

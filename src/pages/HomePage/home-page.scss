@@ -93,6 +93,8 @@
           margin-bottom: 5px;
           display: flex;
           justify-content: space-between;
+          border-bottom: solid transparent 1px;
+
           &:hover {
             border-bottom: solid white 1px;
           }
@@ -104,6 +106,8 @@
         display: flex;
         justify-content: space-between;
         padding: 3px 0;
+        border-bottom: solid transparent 1px;
+
         &:hover {
           box-sizing: border-box;
           border-bottom: solid white 1px;

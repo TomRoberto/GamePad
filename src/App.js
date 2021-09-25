@@ -11,6 +11,7 @@ import GamePage from "./pages/GamePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import CollectionPage from "./pages/CollectionPage";
+import ReviewPage from "./pages/ReviewPage";
 
 // Import components
 
@@ -25,25 +26,34 @@ import {
   faStar,
   faUser,
   faCommentAlt,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 // import { faUser } from "@fortawesome/free-regular-svg-icons";
-library.add(faSearch, faCheck, faChevronDown, faStar, faUser, faCommentAlt);
+library.add(
+  faSearch,
+  faCheck,
+  faChevronDown,
+  faStar,
+  faUser,
+  faCommentAlt,
+  faTimes
+);
 
 function App() {
   const [userToken, setUserToken] = useState(Cookies.get("token") || null);
-  const [username, setUsername] = useState(Cookies.get("username") || null);
+  const [userId, setUserId] = useState(Cookies.get("userId") || null);
 
-  const setConnected = (token, username) => {
-    if (token && username) {
+  const setConnected = (token, userId) => {
+    if (token && userId) {
       setUserToken(token);
       Cookies.set("token", token);
-      setUsername(username);
-      Cookies.set("username", username);
+      setUserId(userId);
+      Cookies.set("userId", userId);
     } else {
       setUserToken(null);
-      setUsername(null);
+      setUserId(null);
       Cookies.remove("token");
-      Cookies.remove("username");
+      Cookies.remove("userId");
     }
   };
 
@@ -53,9 +63,12 @@ function App() {
         <Header
           setConnected={setConnected}
           userToken={userToken}
-          username={username}
+          // username={username}
         />
         <Switch>
+          <Route path="/review">
+            <ReviewPage token={userToken} />
+          </Route>
           <Route path="/collection">
             <CollectionPage token={userToken} />
           </Route>
@@ -66,7 +79,7 @@ function App() {
             <LoginPage setConnected={setConnected} />
           </Route>
           <Route path="/game/:slug">
-            <GamePage token={userToken} />
+            <GamePage token={userToken} userId={userId} />
           </Route>
           <Route path="/">
             <HomePage />

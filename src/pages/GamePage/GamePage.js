@@ -6,9 +6,11 @@ import axios from "axios";
 import notify from "../../components/ReactToastify";
 import Loader from "../../components/Loader";
 
-const GamePage = ({ token }) => {
+const GamePage = ({ token, userId }) => {
   const [data, setData] = useState();
   const [otherGamesData, setOtherGamesData] = useState();
+  const [reviewsData, setReviewsData] = useState();
+
   const [favoriteData, setFavoriteData] = useState();
 
   const [refresh, setRefresh] = useState(0);
@@ -17,6 +19,7 @@ const GamePage = ({ token }) => {
   const params = useParams();
   const history = useHistory();
   const { slug } = params;
+  // console.log
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,6 +28,10 @@ const GamePage = ({ token }) => {
         );
         const response2 = await axios.get(
           `https://api.rawg.io/api/games/${slug}/game-series?key=fc2881ec57b14a3682ccfd3064e510d4`
+        );
+        const responseReviews = await axios.post(
+          "http://localhost:4000/reviews/get",
+          { slug }
         );
         if (token) {
           const responseFavorites = await axios.get(
@@ -40,6 +47,7 @@ const GamePage = ({ token }) => {
 
         setData(response.data);
         setOtherGamesData(response2.data);
+        setReviewsData(responseReviews.data);
         setIsLoading(false);
       } catch (error) {
         console.log(error.message);
@@ -89,6 +97,30 @@ const GamePage = ({ token }) => {
         }
       }
       setRefresh(refresh + 1);
+    } else {
+      history.push("/login");
+    }
+  };
+
+  const checkIfReview = () => {
+    if (reviewsData) {
+      if (userId) {
+        for (let i = 0; i < reviewsData.length; i++) {
+          if (reviewsData[i].user._id === userId) {
+            return true;
+          }
+        }
+      } else {
+        return false;
+      }
+    }
+  };
+
+  const handleReviewClick = () => {
+    if (token) {
+      checkIfReview()
+        ? notify("You already added a review for this game", "red-toastify")
+        : history.push("/review", { gameData: data });
     } else {
       history.push("/login");
     }
@@ -153,7 +185,13 @@ const GamePage = ({ token }) => {
                   ? "Saved to collection"
                   : "Save to Collection"}
               </button>
-              <button className="button">Add a review</button>
+
+              <button
+                className={checkIfReview() ? "fav button" : "button"}
+                onClick={handleReviewClick}
+              >
+                {checkIfReview() ? "Review done" : "Add a review"}
+              </button>
             </div>
             <div>
               <div>
@@ -214,9 +252,22 @@ const GamePage = ({ token }) => {
             })}
           </div>
         </section>
-        <section>
-          <h2>Reviews</h2>
-          <p>Most relevant reviews</p>
+        <section className="reviews">
+          <div>
+            <h2>Reviews</h2>
+          </div>
+          <div>
+            <p>Most relevant reviews :</p>
+            {reviewsData.map((elem, index) => {
+              return (
+                <div className="review">
+                  <p>{elem.title}</p>
+                  <p>{elem.text}</p>
+                  <p>{elem.user.username}</p>
+                </div>
+              );
+            })}
+          </div>
         </section>
       </div>
     </div>
