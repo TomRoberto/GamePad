@@ -30,6 +30,7 @@ const HomePage = () => {
 
   const ref = useRef();
 
+  // For loading data
   useEffect(() => {
     const fetchData = async () => {
       let url = `https://api.rawg.io/api/games?key=fc2881ec57b14a3682ccfd3064e510d4&page=${page}&search=${search}&page_size=${pageSize}&ordering=${ordering}`;
@@ -58,6 +59,7 @@ const HomePage = () => {
     fetchData();
   }, [page, search, pageSize, platforms, genres, ordering]);
 
+  //For closing type, platform and ordering on click outside
   useEffect(() => {
     const checkIfClickOutside = (event) => {
       if (showType && ref.current && !ref.current.contains(event.target)) {
@@ -76,6 +78,11 @@ const HomePage = () => {
       document.removeEventListener("mousedown", checkIfClickOutside);
     };
   }, [showType, showPlatforms, showOrdering]);
+
+  //For scrolling to top on page change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
 
   const orderingTab = [
     "Name",
