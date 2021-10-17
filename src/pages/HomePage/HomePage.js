@@ -1,5 +1,5 @@
 import "./home-page.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,6 +28,8 @@ const HomePage = () => {
 
   const history = useHistory();
 
+  const ref = useRef();
+
   useEffect(() => {
     const fetchData = async () => {
       let url = `https://api.rawg.io/api/games?key=fc2881ec57b14a3682ccfd3064e510d4&page=${page}&search=${search}&page_size=${pageSize}&ordering=${ordering}`;
@@ -55,6 +57,25 @@ const HomePage = () => {
     };
     fetchData();
   }, [page, search, pageSize, platforms, genres, ordering]);
+
+  useEffect(() => {
+    const checkIfClickOutside = (event) => {
+      if (showType && ref.current && !ref.current.contains(event.target)) {
+        setShowType(false);
+      }
+      if (showPlatforms && ref.current && !ref.current.contains(event.target)) {
+        setShowPlatforms(false);
+      }
+      if (showOrdering && ref.current && !ref.current.contains(event.target)) {
+        setShowOrdering(false);
+      }
+    };
+    document.addEventListener("mousedown", checkIfClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickOutside);
+    };
+  }, [showType, showPlatforms, showOrdering]);
 
   const orderingTab = [
     "Name",
@@ -115,9 +136,10 @@ const HomePage = () => {
           <div>
             {showType ? (
               <ul
-              // onBlur={() => {
-              //   setShowType(false);
-              // }}
+                ref={showType ? ref : null}
+                // onBlur={() => {
+                //   setShowType(false);
+                // }}
               >
                 <li
                   onClick={() => {
@@ -166,7 +188,7 @@ const HomePage = () => {
           </div>
           <div>
             {showPlatforms ? (
-              <ul>
+              <ul ref={showPlatforms ? ref : null}>
                 <li
                   onClick={() => {
                     setPlatforms("");
@@ -210,7 +232,7 @@ const HomePage = () => {
               </p>
             )}
           </div>
-          <div>
+          <div ref={showOrdering ? ref : null}>
             {showOrdering ? (
               <>
                 <p
